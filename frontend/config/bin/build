@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+WORKING_DIRECTORY=`pwd`
+NODE_ENV=production node $WORKING_DIRECTORY/../node_modules/webpack/bin/webpack.js --config $WORKING_DIRECTORY/config/webpack.config.build.js --bail -p
