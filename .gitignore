@@ -1,0 +1,4 @@
+node_modules
+uploads
+frontend/public/
+.DS_Store
