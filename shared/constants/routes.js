@@ -16,4 +16,7 @@ module.exports = {
   VACANCIES: {
     ALL: '/vacancies',
   },
+  NEWS: {
+    ALL: '/news',
+  },
 };
