@@ -7,5 +7,7 @@ module.exports = (sequelize, DataTypes) => {
 
   const City = sequelize.define('City', definition);
 
+  City.associate = models => models.City.hasMany(models.Shop);
+
   return City;
 };
