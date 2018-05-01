@@ -16,7 +16,15 @@ router.post(ROUTE.SHOPS.ALL, async ctx => {
   const shopData = getFieldsFromObject(ctx.request.body, SHOP_FIELDS);
 
   try {
-    await models.City.findOne({ where: { id: shopData.CityId } });
+    const city = await models.City.findOne({ where: { id: shopData.CityId } });
+
+    if (!city) {
+      ctx.body = {
+        status: HTTP_STATUS.NOT_FOUND,
+      };
+
+      return;
+    }
     
     if (!Object.values(SHOP_TYPE).includes(shopData.type)) {
       ctx.body = {

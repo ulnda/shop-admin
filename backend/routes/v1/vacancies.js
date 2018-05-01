@@ -15,7 +15,15 @@ router.post(ROUTE.VACANCIES.ALL, async ctx => {
   const vacancyData = getFieldsFromObject(ctx.request.body, VACANCY_FIELDS);
 
   try {
-    await models.Shop.findOne({ where: { id: vacancyData.ShopId } });
+    const shop = await models.Shop.findOne({ where: { id: vacancyData.ShopId } });
+
+    if (!shop) {
+      ctx.body = {
+        status: HTTP_STATUS.NOT_FOUND,
+      };
+
+      return;
+    }
 
     await models.Vacancy.create(vacancyData);
 
