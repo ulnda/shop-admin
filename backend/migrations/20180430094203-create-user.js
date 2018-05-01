@@ -1,4 +1,5 @@
-'use strict';
+const ROLE = require('../../shared/constants/roles');
+
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable('Users', {
@@ -17,14 +18,10 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING,
       },
-      RoleId: {
-        type: Sequelize.INTEGER,
-        onDelete: 'CASCADE',
+      role: {
         allowNull: false,
-        references: {
-          model: 'Roles',
-          key: 'id',
-        },
+        defaultValue: ROLE.CLIENT,
+        type: Sequelize.STRING,
       },
       createdAt: {
         allowNull: false,

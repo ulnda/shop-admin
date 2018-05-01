@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 
 const HTTP_STATUS = require('../../../shared/constants/http-statuses');
 const ROUTE = require('../../../shared/constants/routes');
+const ROLE = require('../../../shared/constants/roles');
 
 const models = require('../../models');
 
@@ -13,7 +14,31 @@ const getFieldsFromObject = require('../../helpers/getFieldsFromObject');
 
 const router = new Router({ prefix: ROUTE.BASE });
 
-const USER_FIELDS = ['email', 'password'];
+const USER_FIELDS = ['email', 'password', 'role'];
+
+router.post(ROUTE.USERS.ALL, async ctx => {
+  const userData = getFieldsFromObject(ctx.request.body, USER_FIELDS);
+  
+  if (userData.role && (!ctx.user || ctx.user.role !== ROLE.ADMIN || userData.role !== ROLE.MANAGER)) {
+    ctx.body = {
+      status: HTTP_STATUS.WRONG_PERMISSIONS,
+    };
+
+    return;
+  }
+
+  try {
+    await models.User.create(userData);
+
+    ctx.body = {
+      status: HTTP_STATUS.OK,
+    };
+  } catch (error) {
+    ctx.body = {
+      status: HTTP_STATUS.WRONG_FIELDS,
+    };
+  }
+});
 
 router.post(ROUTE.USERS.LOGIN, async ctx => {
   try {
@@ -21,9 +46,7 @@ router.post(ROUTE.USERS.LOGIN, async ctx => {
 
     const password = bcrypt.hashSync(authData.password, config.token);
 
-    const user = await models.User.findOne({ where: { email: authData.email, password } }, {
-      include: [models.Role]
-    });
+    const user = await models.User.findOne({ where: { email: authData.email, password } });
 
     if (!user) {
       ctx.body = {
@@ -33,12 +56,11 @@ router.post(ROUTE.USERS.LOGIN, async ctx => {
       return;
     }
 
-    const role = await user.getRole();
     const token = jwt.sign({ email: user.email }, config.token);
 
     ctx.body = {
       status: HTTP_STATUS.OK,
-      data: { token, role: role.code },
+      data: { token, role: user.role },
     };
   } catch (error) {
     ctx.body = {

@@ -1,7 +1,9 @@
+const ROLE = require('../../shared/constants/roles');
+
 const DEFAULT_USERS = [{
   email: 'admin@admin.ru',
   password: '$2a$10$deU.WLTJXIk2OH.SqiYBz.OWQ2tMrQbBjuKEXC0e4DMSKJswqNZX6',
-  RoleId: 1,
+  role: ROLE.ADMIN,
 }];
 
 module.exports = {
