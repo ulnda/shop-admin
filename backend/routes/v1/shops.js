@@ -61,6 +61,21 @@ router.get(ROUTE.SHOPS.VACANCIES, async ctx => {
   }
 });
 
+router.get(ROUTE.SHOPS.ITEMS, async ctx => {
+  try {
+    const items = await models.Item.findAll({ where: { ShopId: ctx.params.id } });
+
+    ctx.body = {
+      status: HTTP_STATUS.OK,
+      data: items,
+    };
+  } catch (error) {
+    ctx.body = {
+      status: HTTP_STATUS.NOT_FOUND,
+    };
+  }
+});
+
 router.delete(ROUTE.SHOPS.SINGLE, async ctx => {
   try {
     const shop = await models.Shop.findOne({ where: { id: ctx.params.id } });

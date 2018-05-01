@@ -12,12 +12,17 @@ module.exports = {
   },
   SHOPS: {
     ALL: '/shops',
-    VACANCIES: '/shops/:id/vacancies',
     SINGLE: '/shops/:id',
+    VACANCIES: '/shops/:id/vacancies',
+    ITEMS: '/shops/:id/items',
   },
   VACANCIES: {
     ALL: '/vacancies',
     SINGLE: '/vacancies/:id',
+  },
+  ITEMS: {
+    ALL: '/items',
+    SINGLE: '/items/:id',
   },
   NEWS: {
     ALL: '/news',
