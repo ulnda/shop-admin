@@ -19,4 +19,7 @@ module.exports = {
   NEWS: {
     ALL: '/news',
   },
+  SERVICES: {
+    ALL: '/services',
+  },
 };
