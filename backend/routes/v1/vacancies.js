@@ -29,4 +29,20 @@ router.post(ROUTE.VACANCIES.ALL, async ctx => {
   }
 });
 
+router.delete(ROUTE.VACANCIES.SINGLE, async ctx => {
+  try {
+    const vacancy = await models.Vacancy.findOne({ where: { id: ctx.params.id } });
+    
+    await vacancy.destroy();
+
+    ctx.body = {
+      status: HTTP_STATUS.OK,
+    };
+  } catch (error) {
+    ctx.body = {
+      status: HTTP_STATUS.NOT_FOUND,
+    };
+  }
+});
+
 module.exports = router;

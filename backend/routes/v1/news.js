@@ -36,4 +36,20 @@ router.post(ROUTE.NEWS.ALL, async ctx => {
   }
 });
 
+router.delete(ROUTE.NEWS.SINGLE, async ctx => {
+  try {
+    const news = await models.News.findOne({ where: { id: ctx.params.id } });
+    
+    await news.destroy();
+
+    ctx.body = {
+      status: HTTP_STATUS.OK,
+    };
+  } catch (error) {
+    ctx.body = {
+      status: HTTP_STATUS.NOT_FOUND,
+    };
+  }
+});
+
 module.exports = router;

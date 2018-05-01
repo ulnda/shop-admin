@@ -36,4 +36,20 @@ router.post(ROUTE.SERVICES.ALL, async ctx => {
   }
 });
 
+router.delete(ROUTE.SERVICES.SINGLE, async ctx => {
+  try {
+    const service = await models.Service.findOne({ where: { id: ctx.params.id } });
+    
+    await service.destroy();
+
+    ctx.body = {
+      status: HTTP_STATUS.OK,
+    };
+  } catch (error) {
+    ctx.body = {
+      status: HTTP_STATUS.NOT_FOUND,
+    };
+  }
+});
+
 module.exports = router;

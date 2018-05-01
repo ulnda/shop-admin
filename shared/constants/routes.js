@@ -3,6 +3,7 @@ module.exports = {
   USERS: {
     ALL: '/users',
     LOGIN: '/users/login',
+    SINGLE: '/users/:id',
   },
   CITIES: {
     ALL: '/cities',
@@ -11,15 +12,19 @@ module.exports = {
   },
   SHOPS: {
     ALL: '/shops',
-    VACANCIES: '/shops/:id/vacancies'
+    VACANCIES: '/shops/:id/vacancies',
+    SINGLE: '/shops/:id',
   },
   VACANCIES: {
     ALL: '/vacancies',
+    SINGLE: '/vacancies/:id',
   },
   NEWS: {
     ALL: '/news',
+    SINGLE: '/news/:id',
   },
   SERVICES: {
     ALL: '/services',
+    SINGLE: '/services/:id',
   },
 };

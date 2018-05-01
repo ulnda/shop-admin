@@ -53,4 +53,20 @@ router.get(ROUTE.SHOPS.VACANCIES, async ctx => {
   }
 });
 
+router.delete(ROUTE.SHOPS.SINGLE, async ctx => {
+  try {
+    const shop = await models.Shop.findOne({ where: { id: ctx.params.id } });
+    
+    await shop.destroy();
+
+    ctx.body = {
+      status: HTTP_STATUS.OK,
+    };
+  } catch (error) {
+    ctx.body = {
+      status: HTTP_STATUS.NOT_FOUND,
+    };
+  }
+});
+
 module.exports = router;

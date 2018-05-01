@@ -69,4 +69,20 @@ router.post(ROUTE.USERS.LOGIN, async ctx => {
   }
 });
 
+router.delete(ROUTE.USERS.SINGLE, async ctx => {
+  try {
+    const user = await models.User.findOne({ where: { id: ctx.params.id } });
+    
+    await user.destroy();
+
+    ctx.body = {
+      status: HTTP_STATUS.OK,
+    };
+  } catch (error) {
+    ctx.body = {
+      status: HTTP_STATUS.NOT_FOUND,
+    };
+  }
+});
+
 module.exports = router;
