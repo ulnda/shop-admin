@@ -16,6 +16,8 @@ module.exports = (sequelize, DataTypes) => {
         onDelete: 'CASCADE',
       },
     });
+
+    models.Shop.hasMany(models.Vacancy);
   };
 
   return Shop;

@@ -16,7 +16,7 @@ router.post(ROUTE.SHOPS.ALL, async ctx => {
   const shopData = getFieldsFromObject(ctx.request.body, SHOP_FIELDS);
 
   try {
-    const city = await models.City.findOne({ where: { id: shopData.CityId } });
+    await models.City.findOne({ where: { id: shopData.CityId } });
     
     if (!Object.values(SHOP_TYPE).includes(shopData.type)) {
       ctx.body = {
@@ -34,6 +34,21 @@ router.post(ROUTE.SHOPS.ALL, async ctx => {
   } catch (error) {
     ctx.body = {
       status: HTTP_STATUS.WRONG_FIELDS,
+    };
+  }
+});
+
+router.get(ROUTE.SHOPS.VACANCIES, async ctx => {
+  try {
+    const vacancies = await models.Vacancy.findAll({ where: { ShopId: ctx.params.id } });
+
+    ctx.body = {
+      status: HTTP_STATUS.OK,
+      data: vacancies,
+    };
+  } catch (error) {
+    ctx.body = {
+      status: HTTP_STATUS.NOT_FOUND,
     };
   }
 });

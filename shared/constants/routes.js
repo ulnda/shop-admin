@@ -11,5 +11,9 @@ module.exports = {
   },
   SHOPS: {
     ALL: '/shops',
+    VACANCIES: '/shops/:id/vacancies'
+  },
+  VACANCIES: {
+    ALL: '/vacancies',
   },
 };

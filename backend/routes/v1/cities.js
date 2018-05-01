@@ -31,8 +31,7 @@ router.get(ROUTE.CITIES.AVAILABLE, async ctx => {
 
 router.get(ROUTE.CITIES.SHOPS, async ctx => {
   try {
-    const city = await models.City.findOne({ where: { id: ctx.params.id } });
-    const shops = await city.getShops();
+    const shops = await models.Shop.findAll({ where: { CityId: ctx.params.id } });
 
     ctx.body = {
       status: HTTP_STATUS.OK,

@@ -5,6 +5,7 @@ const auth = require('./middlewares/auth');
 const usersRoutes = require('./routes/v1/users');
 const shopsRoutes = require('./routes/v1/shops');
 const citiesRoutes = require('./routes/v1/cities');
+const vacanciesRoutes = require('./routes/v1/vacancies');
 
 const PORT = 3000;
 
@@ -16,5 +17,6 @@ app.use(auth);
 app.use(usersRoutes.routes());
 app.use(shopsRoutes.routes());
 app.use(citiesRoutes.routes());
+app.use(vacanciesRoutes.routes());
 
 app.listen(PORT);
