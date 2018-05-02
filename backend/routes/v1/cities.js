@@ -11,7 +11,6 @@ router.get(ROUTE.CITIES.ALL, async ctx => {
   const cities = await models.City.findAll();
 
   ctx.body = {
-    status: HTTP_STATUS.OK,
     data: cities,
   };
 });
@@ -24,24 +23,16 @@ router.get(ROUTE.CITIES.AVAILABLE, async ctx => {
   });
 
   ctx.body = {
-    status: HTTP_STATUS.OK,
     data: cities,
   };
 });
 
 router.get(ROUTE.CITIES.SHOPS, async ctx => {
-  try {
-    const shops = await models.Shop.findAll({ where: { CityId: ctx.params.id } });
+  const shops = await models.Shop.findAll({ where: { CityId: ctx.params.id } });
 
-    ctx.body = {
-      status: HTTP_STATUS.OK,
-      data: shops,
-    };
-  } catch (error) {
-    ctx.body = {
-      status: HTTP_STATUS.NOT_FOUND,
-    };
-  }
+  ctx.body = {
+    data: shops,
+  };
 });
 
 module.exports = router;

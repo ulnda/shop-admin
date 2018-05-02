@@ -3,6 +3,9 @@ const pathToRegexp = require('path-to-regexp')
 
 const config = require('../config/auth.json');
 
+const WrongSessionError = require('../errors/wrong-session-error'); 
+const WrongPermissionsError = require('../errors/wrong-permissions-error');
+
 const ROUTE = require('../../shared/constants/routes');
 const ROLE = require('../../shared/constants/roles');
 const HTTP_STATUS = require('../../shared/constants/http-statuses');
@@ -60,21 +63,9 @@ module.exports = async (ctx, next) => {
     return requestRegExp.test(ctx.request.url) && item.METHOD ===ctx.request.method.toLowerCase();
   });
 
-  if (requestInfo && !ctx.user) {
-    ctx.body = {
-      status: HTTP_STATUS.WRONG_SESSION_ID,
-    };
+  if (requestInfo && !ctx.user) throw new WrongSessionError();
 
-    return;
-  }
-
-  if (requestInfo && !requestInfo.ROLES.includes(ctx.user.role)) {
-    ctx.body = {
-      status: HTTP_STATUS.WRONG_PERMISSIONS,
-    };
-
-    return;
-  }
+  if (requestInfo && !requestInfo.ROLES.includes(ctx.user.role)) throw new WrongPermissionsError();
 
   await next();
 };

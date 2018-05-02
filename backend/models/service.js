@@ -5,6 +5,8 @@ module.exports = (sequelize, DataTypes) => {
   };
 
   const Service = sequelize.define('Service', definition);
+
+  Service.fields = Object.keys(definition);
   
   return Service;
 };

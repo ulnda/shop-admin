@@ -8,81 +8,47 @@ const ROLE = require('../../../shared/constants/roles');
 
 const models = require('../../models');
 
+const NotFoundError = require('../../errors/not-found-error');
+const WrongPermissionsError = require('../../errors/wrong-permissions-error');
+
 const config = require('../../config/auth.json');
 
-const getFieldsFromObject = require('../../helpers/getFieldsFromObject');
+const getFieldsFromObject = require('../../helpers/get-fields-from-object');
 
 const router = new Router({ prefix: ROUTE.BASE });
 
-const USER_FIELDS = ['email', 'password', 'role'];
-
 router.post(ROUTE.USERS.ALL, async ctx => {
-  const userData = getFieldsFromObject(ctx.request.body, USER_FIELDS);
+  const userData = getFieldsFromObject(ctx.request.body, models.User.fields);
   
   if (userData.role && (!ctx.user || ctx.user.role !== ROLE.ADMIN || userData.role !== ROLE.MANAGER)) {
-    ctx.body = {
-      status: HTTP_STATUS.WRONG_PERMISSIONS,
-    };
-
-    return;
+    throw new WrongPermissionsError();
   }
 
-  try {
-    await models.User.create(userData);
-
-    ctx.body = {
-      status: HTTP_STATUS.OK,
-    };
-  } catch (error) {
-    ctx.body = {
-      status: HTTP_STATUS.WRONG_FIELDS,
-    };
-  }
+  await models.User.create(userData);
 });
 
 router.post(ROUTE.USERS.LOGIN, async ctx => {
-  try {
-    const authData = getFieldsFromObject(ctx.request.body, USER_FIELDS);
+  const authData = getFieldsFromObject(ctx.request.body, models.User.fields);
 
-    const password = bcrypt.hashSync(authData.password, config.token);
+  const password = bcrypt.hashSync(authData.password, config.token);
 
-    const user = await models.User.findOne({ where: { email: authData.email, password } });
+  const user = await models.User.findOne({ where: { email: authData.email, password } });
 
-    if (!user) {
-      ctx.body = {
-        status: HTTP_STATUS.NOT_FOUND,
-      };
+  if (!user) throw new NotFoundError();
 
-      return;
-    }
+  const token = jwt.sign({ email: user.email }, config.token);
 
-    const token = jwt.sign({ email: user.email }, config.token);
-
-    ctx.body = {
-      status: HTTP_STATUS.OK,
-      data: { token, role: user.role },
-    };
-  } catch (error) {
-    ctx.body = {
-      status: HTTP_STATUS.WRONG_FIELDS,
-    };
-  }
+  ctx.body = {
+    data: { token, role: user.role },
+  };
 });
 
 router.delete(ROUTE.USERS.SINGLE, async ctx => {
-  try {
-    const user = await models.User.findOne({ where: { id: ctx.params.id } });
-    
-    await user.destroy();
+  const user = await models.User.findOne({ where: { id: ctx.params.id } });
 
-    ctx.body = {
-      status: HTTP_STATUS.OK,
-    };
-  } catch (error) {
-    ctx.body = {
-      status: HTTP_STATUS.NOT_FOUND,
-    };
-  }
+  if (!user) throw new NotFoundError();
+    
+  await user.destroy();
 });
 
 module.exports = router;

@@ -5,6 +5,8 @@ module.exports = (sequelize, DataTypes) => {
   };
 
   const News = sequelize.define('News', definition);
+
+  News.fields = Object.keys(definition);
   
   return News;
 };

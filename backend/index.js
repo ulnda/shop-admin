@@ -4,28 +4,24 @@ const koaBody = require('koa-body');
 const path = require('path');
 const fs = require('fs');
 
-const auth = require('./middlewares/auth');
-
 const ROUTES_FOLDER = 'routes/v1';
+const MIDDLEWARES_FOLDER = 'middlewares';
 
 const PORT = 3000;
 
 const app = new Koa();
 
 app.use(koaBody());
-app.use(auth);
 
-addRoutes();
+getModules(MIDDLEWARES_FOLDER).forEach(file => app.use(file));
+getModules(ROUTES_FOLDER).forEach(file => app.use(file.routes()));
 
 app.listen(PORT);
 
-function addRoutes() {
-  const routesFolder = path.join(__dirname, ROUTES_FOLDER);
+function getModules(folderPath) {
+  const absFolderPath = path.join(__dirname, folderPath);
 
-  fs
-    .readdirSync(routesFolder)
-    .forEach(file => {
-      const routesFile = require(path.join(routesFolder, file));
-      app.use(routesFile.routes());
-    });
+  return fs
+    .readdirSync(absFolderPath)
+    .map(file => require(path.join(absFolderPath, file)));
 }

@@ -11,6 +11,8 @@ module.exports = (sequelize, DataTypes) => {
 
   const User = sequelize.define('User', definition);
 
+  User.fields = Object.keys(definition);
+
   User.hook('beforeCreate', (user, options) => {
     user.password = bcrypt.hashSync(user.password, config.token);
   });
