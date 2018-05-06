@@ -1,3 +1,5 @@
+import { Grid } from 'react-bootstrap';
+
 import Header from 'components/header';
 
 const CITY_LS_PARAM = "__city_ls_param";
@@ -10,7 +12,7 @@ export default class Main extends Component {
   render() {
     return <div className="main">
       <Header />
-      <div className="content">{this.props.children}</div>
+      <Grid>{this.props.children}</Grid>
     </div>;
   }
 }

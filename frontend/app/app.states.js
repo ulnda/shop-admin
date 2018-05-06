@@ -8,6 +8,8 @@ import Main from './components/main';
 import Home from './views/home-views/home';
 import Vacancies from './views/vacancies-views/vacancies';
 
+import Login from './views/auth-views/login';
+
 const reactNode = document.getElementById('react-app');
 
 let prevLocation = {};
@@ -28,6 +30,7 @@ const component = (
         <IndexRoute component={Home}/>
         <Route path="/home" component={Home}/>
         <Route path="/vacancies" component={Vacancies}/>
+        <Route path="/login" component={Login}/>
       </Route>
     </Router>
   </Provider>
