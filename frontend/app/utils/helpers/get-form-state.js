@@ -1,0 +1,1 @@
+export default error => error ? 'error' : 'success';

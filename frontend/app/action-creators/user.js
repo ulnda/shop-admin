@@ -1,14 +1,19 @@
 import store from 'app.store';
 
 import {
-  setCredentialsAction,
-  clearCredentialsAction,
+  setTokenAction,
+  clearTokenAction,
+  setCityAction,
 } from 'reducers/user';
 
-export const setCredentials = credentials => {
-  store.dispatch(setCredentialsAction({ credentials }));
+export const setToken = token => {
+  store.dispatch(setTokenAction({ token }));
 };
 
-export const clearCredentials = () => {
-  store.dispatch(clearCredentialsAction());
+export const clearToken = () => {
+  store.dispatch(clearTokenAction());
+};
+
+export const setCity = cityId => {
+  store.dispatch(setCityAction({ cityId }));
 };
