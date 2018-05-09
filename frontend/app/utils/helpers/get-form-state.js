@@ -1,1 +1,1 @@
-export default error => error ? 'error' : 'success';
+export default error => error ? 'error' : null;

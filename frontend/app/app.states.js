@@ -9,6 +9,7 @@ import Home from './views/home-views/home';
 import Vacancies from './views/vacancies-views/vacancies';
 
 import Login from './views/auth-views/login';
+import Registration from './views/auth-views/registration';
 
 import * as userActions from 'action-creators/user';
 
@@ -31,8 +32,11 @@ const component = (
       <Route component={Main} path="/">
         <IndexRoute component={Home}/>
         <Route path="/home" component={Home}/>
+
         <Route path="/vacancies" component={Vacancies}/>
+
         <Route path="/login" component={Login}/>
+        <Route path="/registration" component={Registration}/>
         <Route path="/logout" onEnter={onLogout}/>
       </Route>
     </Router>

@@ -1,10 +1,10 @@
 import { Col } from 'react-bootstrap';
 
-import LoginForm from 'components/login-form';
+import RegistrationForm from 'components/registration-form';
 
 import * as userActions from 'action-creators/user';
 
-export default class Login extends Component {
+export default class Registration extends Component {
   constructor(props, context) {
     super(props, context);
 
@@ -18,7 +18,7 @@ export default class Login extends Component {
   render() {
     return (
       <Col sm={6} smOffset={3}>
-        <LoginForm onSubmit={this.onSubmit}/>
+        <RegistrationForm onSubmit={this.onSubmit}/>
       </Col>
     );
   }

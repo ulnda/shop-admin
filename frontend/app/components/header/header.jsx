@@ -23,6 +23,9 @@ export default class Header extends Component {
         <NavItem href="/login">
           Login
         </NavItem>
+        <NavItem href="/registration">
+          Registration
+        </NavItem>
         <NavItem href="/profile">
           Profile
         </NavItem>
