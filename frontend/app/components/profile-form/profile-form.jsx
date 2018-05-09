@@ -4,7 +4,7 @@ import { Field } from 'redux-form';
 
 import getFormState from 'utils/helpers/get-form-state';
 
-export default class RegistrationForm extends Component {
+export default class ProfileForm extends Component {
   constructor(props, context) {
     super(props, context);
 
@@ -21,15 +21,6 @@ export default class RegistrationForm extends Component {
   }
 
   setupFormComponents() {
-    this.emailComponent = ({ mods, input: { onChange, value }, meta: { error, touched } }) =>
-      <FormGroup controlId="formHorizontalEmail" validationState={getFormState(touched && error)}>
-        <Col componentClass={ControlLabel} sm={4}>Email</Col>
-        <Col sm={8}>
-          <FormControl type="email" placeholder="Email" onChange={onChange} value={value}/>
-          {touched && <HelpBlock>{error}</HelpBlock>}
-        </Col>
-      </FormGroup>;
-
     this.passwordComponent = ({ mods, input: { onChange, value }, meta: { error, touched } }) =>
       <FormGroup controlId="formHorizontalPassword" validationState={getFormState(touched && error)}>
         <Col componentClass={ControlLabel} sm={4}>Password</Col>
@@ -53,12 +44,6 @@ export default class RegistrationForm extends Component {
     return (
       <Form horizontal>
         <Field
-          name="email"
-          data={''}
-          component={this.emailComponent}
-        />
-
-        <Field
           name="password"
           data={''}
           component={this.passwordComponent}
@@ -72,7 +57,7 @@ export default class RegistrationForm extends Component {
 
         <FormGroup>
           <Col smOffset={4} sm={8}>
-            <Button type="submit" onClick={this.onSubmit}>Sign up</Button>
+            <Button type="submit" onClick={this.onSubmit}>Save</Button>
           </Col>
         </FormGroup>
       </Form>

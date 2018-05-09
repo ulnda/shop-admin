@@ -1,12 +1,13 @@
 const ERROR = {
   EMPTY: 'Required',
   INVALID_FORMAT: 'Invalid format',
-  INCORRECT_PASSWORD_CONFIRMATION: 'Password and confirmation don\'t match',
+  INCORRECT_CONFIRMATION: 'Confirmation don\'t match',
 };
 
 const NAME = {
   LOGIN: 'login',
   REGISTRATION: 'registration',
+  PROFILE: 'profile',
 };
 
 const REGEXP = {
