@@ -10,6 +10,8 @@ import Vacancies from './views/vacancies-views/vacancies';
 
 import Login from './views/auth-views/login';
 
+import * as userActions from 'action-creators/user';
+
 const reactNode = document.getElementById('react-app');
 
 let prevLocation = {};
@@ -31,9 +33,16 @@ const component = (
         <Route path="/home" component={Home}/>
         <Route path="/vacancies" component={Vacancies}/>
         <Route path="/login" component={Login}/>
+        <Route path="/logout" onEnter={onLogout}/>
       </Route>
     </Router>
   </Provider>
 );
+
+function onLogout(nextState, replace) {
+  userActions.clearToken();
+
+  replace('/login');
+}
 
 ReactDOM.render(component, reactNode);

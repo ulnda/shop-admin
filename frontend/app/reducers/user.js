@@ -12,7 +12,7 @@ export const userReducer = handleActions({
       token,
     };
   },
-  [clearTokenAction](state, { payload: { token } }) {
+  [clearTokenAction](state) {
     return {
       ...state,
       token: '',
