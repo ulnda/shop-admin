@@ -1,5 +1,6 @@
 const webpack = require('webpack');
 const Html = require('html-webpack-plugin');
+const ExtractText = require('extract-text-webpack-plugin');
 const path = require('path');
 
 const Provide = webpack.ProvidePlugin;
@@ -52,6 +53,41 @@ module.exports = {
         test: /\.(woff|woff2|ttf|otf|eot)$/,
         loader: 'file-loader?name=fonts/[hash].[ext]',
       },
+      {
+        test: /\.scss$/,
+        use: ExtractText.extract({
+          fallback: 'style-loader',
+          use: [
+            {
+              loader: 'css-loader',
+              options: {
+                minimize: false,
+              },
+            },
+            {
+              loader: 'postcss-loader',
+              options: {
+                plugins: [
+                  require('postcss-url')({
+                    url: 'inline',
+                    maxSize: 5,
+                  }),
+                  require('autoprefixer')({
+                    browsers: ['> 1%', 'android >= 4.4.4', 'ios >= 9'],
+                  }),
+                ],
+              },
+            },
+            'resolve-url-loader',
+            {
+              loader: 'sass-loader',
+              options: {
+                includePaths: [getPath('app')],
+              },
+            },
+          ],
+        }),
+      },
     ],
   },
   plugins: [
@@ -59,9 +95,9 @@ module.exports = {
     new Provide({
       React: 'react',
       Component: 'react/lib/ReactComponent',
+      PureComponent: 'react/lib/ReactPureComponent',
       PropTypes: 'react/lib/ReactPropTypes',
       ReactDOM: 'react-dom',
-      b: 'bem-react-helper',
     }),
     new Define({
       BASE_PATH: JSON.stringify(basePath),
@@ -70,6 +106,10 @@ module.exports = {
     new Html({
       template: getPath('app/index.ejs'),
       basePath,
+    }),
+    new ExtractText({
+      filename: '[name].[chunkhash].css',
+      allChunks: true,
     }),
     new CommonsChunk({
       name: 'vendor',

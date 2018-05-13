@@ -7,6 +7,8 @@ import Main from './components/main';
 
 import Home from './views/home-views/home';
 
+import News from './views/news-views/news';
+
 import Vacancies from './views/vacancies-views/vacancies';
 
 import Profile from './views/user-views/profile';
@@ -37,6 +39,8 @@ const component = (
         <Route path="/home" component={Home}/>
 
         <Route path="/vacancies" component={Vacancies}/>
+
+        <Route path="/news" component={News}/>
 
         <Route path="/profile" component={Profile}/>
 

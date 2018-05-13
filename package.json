@@ -21,6 +21,7 @@
     "cities.json": "1.1.2",
     "google-map-react": "1.0.0",
     "history": "3.3.0",
+    "luxon": "1.2.0",
     "promise-polyfill": "6.0.2",
     "react": "15.5.4",
     "react-bootstrap": "0.32.1",
