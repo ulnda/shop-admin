@@ -1,5 +1,7 @@
 import { Col } from 'react-bootstrap';
 
+import { bind } from 'decko';
+
 import NewsList from 'components/news-list';
 
 import DeletingDialog from 'components/deleting-dialog';
@@ -9,13 +11,6 @@ export default class News extends Component {
     super(props);
 
     this.state = {};
-
-    this.onNewsItemDelete = this.onNewsItemDelete.bind(this);
-    this.onNewsItemEdit = this.onNewsItemEdit.bind(this);
-    this.onNewsItemCreate = this.onNewsItemCreate.bind(this);
-    
-    this.onNewsDeletingCancel = this.onNewsDeletingCancel.bind(this);
-    this.onNewsDelete = this.onNewsDelete.bind(this);
   }
 
   componentWillMount() {
@@ -43,24 +38,28 @@ export default class News extends Component {
     this.setState({ isDeletingDialogShow: false });
   }
 
+  @bind
   onNewsItemDelete(item) {
     this.item = item;
     this.setState({ isDeletingDialogShow: true });
   }
 
+  @bind
   onNewsItemEdit(item) {
     this.props.router.push(`news/${item.id}/edit`);
   }
 
+  @bind
   onNewsItemCreate(item) {
     this.props.router.push(`news/${item.id}/new`);
   }
 
+  @bind
   onNewsDelete() {
-    console.log(this.item.id);
     this.hideNewsDeletingDialog();
   }
 
+  @bind
   onNewsDeletingCancel() {
     this.hideNewsDeletingDialog();
   }

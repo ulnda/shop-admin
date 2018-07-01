@@ -1,16 +1,14 @@
 import { Col } from 'react-bootstrap';
 
+import { bind } from 'decko';
+
 import ProfileForm from 'components/profile-form';
 
 import * as userActions from 'action-creators/user';
 
 export default class Profile extends Component {
-  constructor(props, context) {
-    super(props, context);
 
-    this.onSubmit = this.onSubmit.bind(this);
-  }
-
+  @bind
   onSubmit() {
     this.props.router.push('/');
   }

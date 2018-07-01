@@ -1,26 +1,24 @@
 import { DateTime } from 'luxon';
 
+import { bind } from 'decko';
+
 import { OUTPUT_DATE_FORMAT } from 'constants/main';
 
 export default class NewsList extends Component {  
-  constructor(props) {
-    super(props);
 
-    this.onDelete = this.onDelete.bind(this);
-    this.onEdit = this.onEdit.bind(this);
-    this.onCreate = this.onCreate.bind(this);
-  }
-
+  @bind
   onDelete(event) {
     event.preventDefault();
     this.props.onDelete(this.props.item);
   }
 
+  @bind
   onCreate(event) {
     event.preventDefault();
     this.props.onCreate(this.props.item);
   }
   
+  @bind
   onEdit(event) {
     event.preventDefault();
     this.props.onEdit(this.props.item);

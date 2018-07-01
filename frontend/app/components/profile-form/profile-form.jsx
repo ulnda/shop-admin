@@ -1,5 +1,7 @@
 import { Row, Col, Form, FormGroup, FormControl, Button, ControlLabel, HelpBlock } from 'react-bootstrap';
 
+import { bind } from 'decko';
+
 import { Field } from 'redux-form';
 
 import getFormState from 'utils/helpers/get-form-state';
@@ -8,11 +10,10 @@ export default class ProfileForm extends Component {
   constructor(props, context) {
     super(props, context);
 
-    this.onSubmit = this.onSubmit.bind(this);
-
     this.setupFormComponents();
   }
 
+  @bind
   onSubmit(event) {
     event.preventDefault();
     this.props.handleSubmit();

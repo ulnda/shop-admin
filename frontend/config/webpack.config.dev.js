@@ -42,7 +42,7 @@ module.exports = {
               'react',
               'react-hmre',
             ],
-            plugins: ['transform-object-rest-spread'],
+            plugins: ['transform-object-rest-spread', 'transform-decorators-legacy'],
           },
         },
       },

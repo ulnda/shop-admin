@@ -1,6 +1,10 @@
+import { bind } from 'decko';
+
+const SCROLL_THRESHOLD = 100;
+
 export default function endlessScroll(params) {
   const parameters = Object.assign({
-    scrollThreshold: 100,
+    scrollThreshold: SCROLL_THRESHOLD,
   }, params);
 
   return CloneComponent => {
@@ -12,13 +16,6 @@ export default function endlessScroll(params) {
         this.scrollBody = document.querySelector('html');
         this.scrollWrapper = document.querySelector('body');
         this.scrollArea = document.getElementById('react-app');
-
-        this.initEndlessScroll = this.initEndlessScroll.bind(this);
-        this.destroyEndlessScroll = this.destroyEndlessScroll.bind(this);
-        this.disableEndlessScroll = this.disableEndlessScroll.bind(this);
-        this.enableEndlessScroll = this.enableEndlessScroll.bind(this);
-        this.setEndlessScrollPosition = this.setEndlessScrollPosition.bind(this);
-        this.handleScroll = this.handleScrollEvent.bind(this);
       }
 
       componentWillUnmount() {
@@ -31,22 +28,27 @@ export default function endlessScroll(params) {
         }
       }
 
+      @bind
       setEndlessScrollPosition(position) {
         this.scrollBody.scrollTop = position || this.scrollTop;
       }
 
+      @bind
       disableEndlessScroll() {
         this.scrollEnabled = false;
       }
 
+      @bind
       enableEndlessScroll() {
         this.scrollEnabled = true;
       }
 
+      @bind
       destroyEndlessScroll() {
         this.removeEndlessScroll();
       }
 
+      @bind
       handleScrollEvent() {
         const clientHeight = this.scrollBody.clientHeight;
         const scrollHeight = this.scrollArea.scrollHeight;
@@ -63,6 +65,7 @@ export default function endlessScroll(params) {
         }
       }
 
+      @bind
       initEndlessScroll(handlers) {
         this.callback = handlers.callback;
         this.handlerPosition = handlers.handlerPosition;
@@ -91,14 +94,6 @@ export default function endlessScroll(params) {
         );
       }
     }
-
-    ScrollComponent.propTypes = {
-      initEndlessScroll: PropTypes.func,
-      enableEndlessScroll: PropTypes.func,
-      disableEndlessScroll: PropTypes.func,
-      destroyEndlessScroll: PropTypes.func,
-      setEndlessScrollPosition: PropTypes.func,
-    };
 
     return ScrollComponent;
   };

@@ -1,16 +1,14 @@
 import { Col } from 'react-bootstrap';
 
+import { bind } from 'decko';
+
 import LoginForm from 'components/login-form';
 
 import * as userActions from 'action-creators/user';
 
 export default class Login extends Component {
-  constructor(props, context) {
-    super(props, context);
 
-    this.onSubmit = this.onSubmit.bind(this);
-  }
-
+  @bind
   onSubmit() {
     this.props.router.push('/');
   }
